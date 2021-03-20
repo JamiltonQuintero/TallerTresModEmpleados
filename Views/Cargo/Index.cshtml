@@ -1,0 +1,53 @@
+﻿@model IEnumerable<TallerTresModEmpleados.Models.Entities.Cargo>
+
+@{
+    ViewData["Title"] = "Cargos";
+}
+
+<h1>Cargos PrivTours</h1>
+
+<p>
+    <a asp-action="Create">Agregar un nuevo cargo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InternoExterno)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CambioEstado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InternoExterno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CambioEstado)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CargoId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.CargoId">Ver Detalle</a> |
+                <a asp-action="Delete" asp-route-id="@item.CargoId">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
