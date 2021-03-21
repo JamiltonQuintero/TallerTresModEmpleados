@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 
 namespace TallerTresModEmpleados.Models.Abstract
 {
-    public interface IEmpleadoBusiness
+    public interface ICargoBusiness
     {
-
-
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TallerTresModEmpleados.Models.Abstract;
 using TallerTresModEmpleados.Models.DAL;
 using TallerTresModEmpleados.Models.Entities;
 
@@ -12,13 +13,17 @@ namespace TallerTresModEmpleados.Controllers
 {
     public class EmpleadoController : Controller
     {
-        private readonly DbContextProyecto _context;
+       // private readonly DbContextProyecto _context;
 
-        public EmpleadoController(DbContextProyecto context)
+        private readonly IEmpleadoBusiness _empleadoBusiness;
+
+        public EmpleadoController(IEmpleadoBusiness empleadoBusiness)
         {
-            _context = context;
+            _empleadoBusiness = empleadoBusiness;
         }
 
+
+        /*
         // GET: Empleado
         public async Task<IActionResult> Index()
         {
@@ -148,6 +153,6 @@ namespace TallerTresModEmpleados.Controllers
         private bool EmpleadoExists(int id)
         {
             return _context.EmpleadosPrivTours.Any(e => e.EmpleadoId == id);
-        }
+        }*/
     }
 }

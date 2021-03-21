@@ -7,11 +7,12 @@ using TallerTresModEmpleados.Models.DAL;
 
 namespace TallerTresModEmpleados.Models.Business
 {
-    public class EmpleadoBusiness : IEmpleadoBusiness
+    public class CargoBusiness : ICargoBusiness
     {
+
         private readonly DbContextProyecto _context;
 
-        public EmpleadoBusiness(DbContextProyecto context)
+        public CargoBusiness(DbContextProyecto context)
         {
             _context = context;
         }

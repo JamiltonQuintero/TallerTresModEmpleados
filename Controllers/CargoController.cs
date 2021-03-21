@@ -5,20 +5,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TallerTresModEmpleados.Models.Abstract;
 using TallerTresModEmpleados.Models.DAL;
 using TallerTresModEmpleados.Models.Entities;
 
 namespace TallerTresModEmpleados.Controllers
 {
-    public class CargoController : Controller
-    {
-        private readonly DbContextProyecto _context;
+    public class CargoController : Controller { 
+    
+               
 
-        public CargoController(DbContextProyecto context)
+        private readonly ICargoBusiness _cargoBusiness;
+
+        public CargoController(ICargoBusiness cargoBusiness)
         {
-            _context = context;
+            _cargoBusiness = cargoBusiness;
         }
 
+
+    /*
         // GET: Cargo
         public async Task<IActionResult> Index()
         {
@@ -148,6 +153,6 @@ namespace TallerTresModEmpleados.Controllers
         private bool CargoExists(int id)
         {
             return _context.CargosPrivTours.Any(e => e.CargoId == id);
-        }
+        }*/
     }
 }
