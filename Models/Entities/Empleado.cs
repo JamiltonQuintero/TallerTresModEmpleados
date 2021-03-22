@@ -16,6 +16,7 @@ namespace TallerTresModEmpleados.Models.Entities
         public string Email { get; set; }
         public string Celular { get; set; }
         public string Contrasena { get; set; }
+
         [DisplayName("Cargo del empleado")]
         public int CargoId { get; set; }
 

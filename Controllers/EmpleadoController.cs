@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TallerTresModEmpleados.Models.Abstract;
 using TallerTresModEmpleados.Models.DAL;
 using TallerTresModEmpleados.Models.Entities;
 
@@ -12,13 +13,13 @@ namespace TallerTresModEmpleados.Controllers
 {
     public class EmpleadoController : Controller
     {
-        private readonly DbContextProyecto _context;
+        private readonly IEmpleadoBusiness _empleadoBusiness;
 
-        public EmpleadoController(DbContextProyecto context)
+        public EmpleadoController(IEmpleadoBusiness empleadoBusiness)
         {
-            _context = context;
+            _empleadoBusiness = empleadoBusiness ;
         }
-
+        /*
         // GET: Empleado
         public async Task<IActionResult> Index()
         {
@@ -42,13 +43,14 @@ namespace TallerTresModEmpleados.Controllers
 
             return View(empleado);
         }
-
+        */
         // GET: Empleado/Create
         public IActionResult Create()
         {
+            //ViewData ["listaCargos"] = new SelectList(_empleadoBusiness.ObtenerListaCargo(), "CargoId", "Nombre");
             return View();
         }
-
+        /*
         // POST: Empleado/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -64,7 +66,7 @@ namespace TallerTresModEmpleados.Controllers
             }
             return View(empleado);
         }
-
+        
         // GET: Empleado/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -148,6 +150,6 @@ namespace TallerTresModEmpleados.Controllers
         private bool EmpleadoExists(int id)
         {
             return _context.EmpleadosPrivTours.Any(e => e.EmpleadoId == id);
-        }
+        }*/
     }
 }
