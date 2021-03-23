@@ -7,6 +7,8 @@ using TallerTresModEmpleados.Models.Abstract;
 using TallerTresModEmpleados.Models.DAL;
 using TallerTresModEmpleados.Models.Entities;
 
+
+/////asdab sldkbaskjbnasñf
 namespace TallerTresModEmpleados.Models.Business
 {
     public class CargoBusiness : ICargoBusiness
