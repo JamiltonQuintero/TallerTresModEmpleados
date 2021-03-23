@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TallerTresModEmpleados.Models.Abstract;
 using TallerTresModEmpleados.Models.DAL;
 using TallerTresModEmpleados.Models.Entities;
 
@@ -12,17 +13,17 @@ namespace TallerTresModEmpleados.Controllers
 {
     public class CargoController : Controller
     {
-        private readonly DbContextProyecto _context;
+        private readonly ICargoBusiness _iCargoBusiness;
 
-        public CargoController(DbContextProyecto context)
+        public CargoController(ICargoBusiness iCargoBusiness)
         {
-            _context = context;
+            _iCargoBusiness = iCargoBusiness;
         }
 
         // GET: Cargo
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CargosPrivTours.ToListAsync());
+            return View(await _iCargoBusiness.ObtenerListaCargos());
         }
 
         // GET: Cargo/Details/5
@@ -33,8 +34,8 @@ namespace TallerTresModEmpleados.Controllers
                 return NotFound();
             }
 
-            var cargo = await _context.CargosPrivTours
-                .FirstOrDefaultAsync(m => m.CargoId == id);
+            var cargo = await _iCargoBusiness.ObtenerCargoPorId(id.Value);
+                
             if (cargo == null)
             {
                 return NotFound();
@@ -56,15 +57,23 @@ namespace TallerTresModEmpleados.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CargoId,Nombre,Descripcion,InternoExterno,CambioEstado")] Cargo cargo)
         {
+
             if (ModelState.IsValid)
             {
-                _context.Add(cargo);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                cargo.Nombre = cargo.Nombre.ToLower();
+                var cargoTemporal = await _iCargoBusiness.ObtenerCargoPorNombre(cargo.Nombre);
+                if(cargoTemporal == null)
+                {
+                    await _iCargoBusiness.GuardarCargo(cargo);
+                    return RedirectToAction(nameof(Index));
+                }
             }
+            ViewData["errorNombre"] = "Ya existe un cargo con ese nombre.";
             return View(cargo);
         }
-
+        
+        /*
+        
         // GET: Cargo/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -149,5 +158,6 @@ namespace TallerTresModEmpleados.Controllers
         {
             return _context.CargosPrivTours.Any(e => e.CargoId == id);
         }
+        */
     }
 }

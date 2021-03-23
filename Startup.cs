@@ -30,8 +30,9 @@ namespace TallerTresModEmpleados
             services.AddControllersWithViews();
             var conexion = Configuration["ConnectionStrings:conexion"];
             services.AddDbContext<DbContextProyecto>(options => options.UseSqlServer(conexion));
-
             services.AddScoped<IEmpleadoBusiness, EmpleadoBusiness>();
+            services.AddScoped<ICargoBusiness, CargoBusiness>();
+            services.AddRazorPages().AddRazorRuntimeCompilation();
 
 
         }
@@ -60,7 +61,7 @@ namespace TallerTresModEmpleados
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Empleado}/{action=Index}/{id?}");
             });
         }
     }
