@@ -19,7 +19,8 @@ namespace TallerTresModEmpleados.Models.Entities
         [DisplayName("Cargo del empleado")]
         public int CargoId { get; set; }
 
-        public bool CambioEstado { get; set; }
+        public virtual Cargo Cargo { get; set; }
+        public Boolean CambioEstado { get; set; }
 
 
     }

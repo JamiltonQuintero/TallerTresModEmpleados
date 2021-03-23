@@ -26,6 +26,7 @@
                 <label asp-for="Documento" class="control-label"></label>
                 <input asp-for="Documento" class="form-control" />
                 <span asp-validation-for="Documento" class="text-danger"></span>
+                <span class="text-danger">@ViewBag.error</span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
@@ -44,7 +45,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="CargoId" class="control-label"></label>
-                <input asp-for="CargoId" class="form-control" />
+                <select asp-for="CargoId" class="form-control"  asp-items="ViewBag.listaCargos">
+
+                    <option>Por favor elija un cargo</option>
+
+                </select>
                 <span asp-validation-for="CargoId" class="text-danger"></span>
             </div>
             <div class="form-group">

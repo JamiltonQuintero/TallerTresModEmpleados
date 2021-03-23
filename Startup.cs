@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TallerTresModEmpleados.Models.Abstract;
+using TallerTresModEmpleados.Models.Business;
 using TallerTresModEmpleados.Models.DAL;
 
 namespace TallerTresModEmpleados
@@ -28,6 +30,10 @@ namespace TallerTresModEmpleados
             services.AddControllersWithViews();
             var conexion = Configuration["ConnectionStrings:conexion"];
             services.AddDbContext<DbContextProyecto>(options => options.UseSqlServer(conexion));
+
+            services.AddScoped<IEmpleadoBusiness, EmpleadoBusiness>();
+            services.AddScoped<ICargoBusiness, CargoBusiness>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

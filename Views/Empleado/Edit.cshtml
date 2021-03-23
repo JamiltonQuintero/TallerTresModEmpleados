@@ -1,12 +1,11 @@
 ﻿@model TallerTresModEmpleados.Models.Entities.Empleado
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar";
 }
 
-<h1>Edit</h1>
+<h1>Estas Editando a el empleado @Html.DisplayFor(model => model.Nombre) @Html.DisplayFor(model => model.Apellido)</h1>
 
-<h4>Empleado</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -27,6 +26,7 @@
                 <label asp-for="Documento" class="control-label"></label>
                 <input asp-for="Documento" class="form-control" />
                 <span asp-validation-for="Documento" class="text-danger"></span>
+                <span class="text-danger">@ViewBag.error</span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
@@ -45,18 +45,22 @@
             </div>
             <div class="form-group">
                 <label asp-for="CargoId" class="control-label"></label>
-                <input asp-for="CargoId" class="form-control" />
+                <select asp-for="CargoId" class="form-control" asp-items="ViewBag.listaCargos">
+
+                    <option>Por favor elija un cargo</option>
+
+                </select>
                 <span asp-validation-for="CargoId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Editar" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Regresar</a>
 </div>
 
 @section Scripts {
