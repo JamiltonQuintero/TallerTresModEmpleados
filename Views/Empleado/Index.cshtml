@@ -31,8 +31,14 @@
                 @Html.DisplayNameFor(model => model.Contrasena)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CargoId)
+                @Html.DisplayNameFor(model => model.Cargo)
             </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.CambioEstado)
+            </th>
+ 
+
             <th></th>
         </tr>
     </thead>
@@ -58,12 +64,15 @@
                 @Html.DisplayFor(modelItem => item.Contrasena)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CargoId)
+                @Html.DisplayFor(modelItem => item.Cargo.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem =>   item.CambioEstado)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.EmpleadoId">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.EmpleadoId">Ver Detalle</a> |
-                <a asp-action="Delete" asp-route-id="@item.EmpleadoId">Eliminar</a>
+                <a asp-action="Delete" asp-route-id="@item.EmpleadoId" class="text-danger m1-1" onclick="return confirm ('¿Desea Cambiar el estado de este registro?')"><i class="fas fa-user-minus"></i> CambiarEstado</a>
             </td>
         </tr>
 }

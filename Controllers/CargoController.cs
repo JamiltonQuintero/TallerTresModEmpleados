@@ -23,13 +23,13 @@ namespace TallerTresModEmpleados.Controllers
         }
 
 
-    /*
+    
         // GET: Cargo
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CargosPrivTours.ToListAsync());
+            return View(await _cargoBusiness.ObtenerListaCargo());
         }
-
+        
         // GET: Cargo/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -38,8 +38,7 @@ namespace TallerTresModEmpleados.Controllers
                 return NotFound();
             }
 
-            var cargo = await _context.CargosPrivTours
-                .FirstOrDefaultAsync(m => m.CargoId == id);
+            var cargo = await _cargoBusiness.ObtenerCargoPorId(id.Value);
             if (cargo == null)
             {
                 return NotFound();
@@ -47,13 +46,13 @@ namespace TallerTresModEmpleados.Controllers
 
             return View(cargo);
         }
-
+        
         // GET: Cargo/Create
         public IActionResult Create()
         {
             return View();
         }
-
+        
         // POST: Cargo/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -63,13 +62,13 @@ namespace TallerTresModEmpleados.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cargo);
-                await _context.SaveChangesAsync();
+                _cargoBusiness.CrearCargo(cargo);
+                
                 return RedirectToAction(nameof(Index));
             }
             return View(cargo);
         }
-
+        /*
         // GET: Cargo/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -85,7 +84,7 @@ namespace TallerTresModEmpleados.Controllers
             }
             return View(cargo);
         }
-
+        /*
         // POST: Cargo/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

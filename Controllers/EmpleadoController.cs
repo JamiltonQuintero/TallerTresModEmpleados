@@ -13,7 +13,7 @@ namespace TallerTresModEmpleados.Controllers
 {
     public class EmpleadoController : Controller
     {
-       // private readonly DbContextProyecto _context;
+        //private readonly DbContextProyecto _context;
 
         private readonly IEmpleadoBusiness _empleadoBusiness;
 
@@ -23,13 +23,13 @@ namespace TallerTresModEmpleados.Controllers
         }
 
 
-        /*
+        
         // GET: Empleado
         public async Task<IActionResult> Index()
         {
-            return View(await _context.EmpleadosPrivTours.ToListAsync());
+            return View(await _empleadoBusiness.ObtenerListaEmpleados());
         }
-
+        
         // GET: Empleado/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -38,8 +38,7 @@ namespace TallerTresModEmpleados.Controllers
                 return NotFound();
             }
 
-            var empleado = await _context.EmpleadosPrivTours
-                .FirstOrDefaultAsync(m => m.EmpleadoId == id);
+            var empleado = await _empleadoBusiness.ObtenerEmpleadoPorId(id.Value);
             if (empleado == null)
             {
                 return NotFound();
@@ -47,13 +46,15 @@ namespace TallerTresModEmpleados.Controllers
 
             return View(empleado);
         }
-
+        
         // GET: Empleado/Create
         public IActionResult Create()
         {
+            ViewData["listaCargos"] = _empleadoBusiness.ObtenerListaCargos();
             return View();
         }
 
+        
         // POST: Empleado/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -63,13 +64,23 @@ namespace TallerTresModEmpleados.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(empleado);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                var empleadoTemporal = await _empleadoBusiness.ObtenerEmpleadoPorDocumento(empleado.Documento);
+
+                if (empleadoTemporal == null)
+                {
+                    await _empleadoBusiness.CrearEmpleado(empleado);
+
+                    return RedirectToAction(nameof(Index));
+                }
+                    
             }
+            ViewData["listaCargos"] = _empleadoBusiness.ObtenerListaCargos();
+            ViewData["error"] = "Documento ya registrado";
             return View(empleado);
         }
 
+        
         // GET: Empleado/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -78,14 +89,16 @@ namespace TallerTresModEmpleados.Controllers
                 return NotFound();
             }
 
-            var empleado = await _context.EmpleadosPrivTours.FindAsync(id);
+            var empleado = await _empleadoBusiness.ObtenerEmpleadoPorId(id.Value);
             if (empleado == null)
             {
                 return NotFound();
             }
+
+            ViewData["listaCargos"] = _empleadoBusiness.ObtenerListaCargos();
             return View(empleado);
         }
-
+        
         // POST: Empleado/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -98,29 +111,30 @@ namespace TallerTresModEmpleados.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
+
+            var empleadoTemporal = await _empleadoBusiness.ObtenerEmpleadoPorDocumento(empleado.Documento);
+
+            if (empleadoTemporal == null || (empleadoTemporal.EmpleadoId == empleado.EmpleadoId) ) {
+
+                if (ModelState.IsValid)
                 {
-                    _context.Update(empleado);
-                    await _context.SaveChangesAsync();
+                   
+                    await _empleadoBusiness.EditarEmpleado(empleado);
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!EmpleadoExists(empleado.EmpleadoId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    
                 }
-                return RedirectToAction(nameof(Index));
-            }
+
+            ViewData["listaCargos"] = _empleadoBusiness.ObtenerListaCargos();
+
+            ViewData["error"] = "Documento Ya registrado";
+
             return View(empleado);
         }
 
+            
+        
+        
         // GET: Empleado/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -129,16 +143,23 @@ namespace TallerTresModEmpleados.Controllers
                 return NotFound();
             }
 
-            var empleado = await _context.EmpleadosPrivTours
-                .FirstOrDefaultAsync(m => m.EmpleadoId == id);
-            if (empleado == null)
+            var empleado = await _empleadoBusiness.ObtenerEmpleadoPorId(id.Value);
+
+            if(empleado.CambioEstado == true)
             {
-                return NotFound();
+                await _empleadoBusiness.CambiarEstadoInactivoEmpleado(id.Value);
+            }
+            else
+            {
+                await _empleadoBusiness.CambiarEstadoActivoEmpleado(id.Value);
             }
 
-            return View(empleado);
+            
+
+            return RedirectToAction(nameof(Index));
         }
 
+        /*
         // POST: Empleado/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

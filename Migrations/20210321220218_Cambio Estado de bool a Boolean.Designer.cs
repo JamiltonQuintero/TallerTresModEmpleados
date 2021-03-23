@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TallerTresModEmpleados.Models.DAL;
 
 namespace TallerTresModEmpleados.Migrations
 {
     [DbContext(typeof(DbContextProyecto))]
-    partial class DbContextProyectoModelSnapshot : ModelSnapshot
+    [Migration("20210321220218_Cambio Estado de bool a Boolean")]
+    partial class CambioEstadodeboolaBoolean
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
